@@ -1,11 +1,11 @@
-文章翻译自[Raywenderlich/swift-style-guide](https://github.com/raywenderlich/swift-style-guide) 
+文章翻译自[Raywenderlich/swift-style-guide](https://github.com/raywenderlich/swift-style-guide)  
 目的只想练习一下英文阅读能力以及加深对Swift语言的理解，如果翻译错误欢迎指出，谢谢。🙏  
 
 ## 正确性 
 尽可能让你的代码在编译过程中没有警告。 下面的很多设计风格都遵循了这条规则，例如用 #selector 类型代替了字符串文字。
 
 ## 命名 
-描述性和一致性的命名使软件更容易理解。参考[Swift命名风格](https://swift.org/documentation/api-design-guidelines/) 
+描述性和一致性的命名使软件更容易理解。参考[Swift命名风格](https://swift.org/documentation/api-design-guidelines/)  
 关键点包括： 
  * 调用位置尽可能清晰；
  * 清晰比简洁更重要；
@@ -33,6 +33,13 @@
  * 选择可提供给文档使用的参数名称； 
  * 尽量不要把函数的第一个参数名称包含在函数名字内，除非它是在委托中被提及； 
  * 标签闭包与元组参数；  
- * 考虑默认参数值； 
+ * 考虑默认参数值；  
 
+ ### 文法 
+ 当提及到方法命名的文法，语义不含糊是关键。所以，尽量采用最简单的文法命名一个方法。 
+ 1. 编写一个不含参数的方法。例如：下一步，你需要调用`addTarget`。 
+ 2. 编写一个带参数标签的方法。例如：下一步，你需要调用`addTarget(_:action:)`。 
+ 3. 编写一个带参数标签和类型的完整方法。例如：下一步，你需要调用`addTarget(_: Any?, action:Selector?)`。  
+对于`UIGestureRecognizer`使用上面的例子，1是最明确和优先选择的的。  
+**扩展**：你可以使用Xcode的jump bar追踪带参数标签的方法。如果你特别擅长同时按多个键，将鼠标移到方法名中并按下Shift-Control-Option-Command-C(所有4个修饰键)，这样Xcode将友好地将其拷贝到你的剪贴板中。 
 
