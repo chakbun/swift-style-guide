@@ -3,7 +3,10 @@
 
 This style guide is different from others you may see, because the focus is centered on readability for print and the web. We created this style guide to keep the code in our books, tutorials, and starter kits nice and consistent — even though we have many different authors working on the books.
 
-Our overarching goals are clarity, consistency and brevity, in that order.
+Our overarching goals are clarity, consistency and brevity, in that order. 
+
+## Language 
+ [简体中文](简体中文)
 
 ## Table of Contents
 
@@ -1113,3 +1116,4 @@ Smiley faces are a very prominent style feature of the [raywenderlich.com](https
 * [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
 * [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
 * [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
+* [简体中文](https://github.com/chakbun/swift-style-guide/edit/master/README_CN.md)
