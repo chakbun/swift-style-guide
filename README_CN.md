@@ -121,13 +121,98 @@ let color = "red"
 let colour = "red"
 ``` 
 
+## 代码组织 
+使用扩展使你的代码组织成逻辑功能代码块。每一个扩展通过`// MARK: -` 注释作为开始，使每个代码块看起来更有条理。 
 
+### 协议实现   
+特别是在模型遵循协议时，建议在独立的扩展中实现协议方法。这样使有关联的协议方法组成一起，还可以简化为类添加协议的实现方法的步骤。  
 
+**建议**:  
+```swift
+class MyViewController: UIViewController {
+  // class stuff here
+}
 
+// MARK: - UITableViewDataSource
+extension MyViewController: UITableViewDataSource {
+  // table view data source methods
+}
 
+// MARK: - UIScrollViewDelegate
+extension MyViewController: UIScrollViewDelegate {
+  // scroll view delegate methods
+}
+``` 
 
+**避免**:  
+```swift
+class MyViewController: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
+  // all methods
+}
+``` 
 
+自从编译器不允许用户在派生类中重新声明协议的实现方法，所以并不需要复制基类的扩展组。这在派生类是只重写少量方法的最终类中更是这样，对于什么时候保留扩展组就让编码者决定。
 
+对于UIKit的视图控制器，可考虑将其生命周期，自定义访问器和IBAction分组到独立的扩展中。  
+
+### 未使用的代码  
+~~垃圾~~未使用的代码，包括Xcode模版预设的代码/提示/注释等都必须删掉。除非那些代码/注释是指导用户使用相关代码的。   
+与简单实现调用父类的指导教程不相关的期望方法也应该删掉，包括任何空/没用的UIApplicationDelegate方法。  
+
+**建议**:  
+```swift
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  return Database.contacts.count
+}
+``` 
+
+**避免**:  
+```swift
+override func didReceiveMemoryWarning() {
+  super.didReceiveMemoryWarning()
+  // Dispose of any resources that can be recreated.
+}
+
+override func numberOfSections(in tableView: UITableView) -> Int {
+  // #warning Incomplete implementation, return the number of sections
+  return 1
+}
+
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  // #warning Incomplete implementation, return the number of rows
+  return Database.contacts.count
+}
+``` 
+
+### 少导入
+只导入源文件所需的模块。例如，如果只需要使用`Foundation`的接口，就只导入`Foundation`而不要导入`UIKit`。同样地，假设你必须导入`UIKit`，就不要导入`Foundation`了。  
+
+**建议**:  
+```swift
+import UIKit
+var view: UIView
+var deviceModels: [String]
+``` 
+
+**建议**:  
+```swift
+import Foundation
+var deviceModels: [String]
+``` 
+
+**避免**:  
+```swift
+import UIKit
+import Foundation
+var view: UIView
+var deviceModels: [String]
+``` 
+
+**避免**:  
+```swift
+import UIKit
+var deviceModels: [String]
+``` 
 
 
 
