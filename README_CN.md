@@ -265,6 +265,110 @@ class TestDatabase : Database {
 * 避免在行尾使用空格。 
 * 文件以换行符结束。 
 
+## 注释 
+如果有必要，使用注释去解释特定代码块的作用。注释必须是保持最新的，否则就删除它。  
+避免在代码内部使用注释，尽量让代码作为最好的注释。除非你不打算将这些注释放在文档中。  
+避免使用C语言风格的注释(`/* ... */`)。建议使用双斜杠或三斜杠。  
+
+## 类与结构体
+
+### 应该用哪一个？  
+切记，结构体是[值类型](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_144)。使用结构体处理不需要特定标识的事物。例如一个数组包含[a, b, c] 与 另外一个包含[a, b, c]的数组是相同的，他们完全是可互换的。对于使用的是第一个数组还是第二个数组没有任何影响，因为他们代表着相同的东西。这是考虑使用结构体的根本。  
+
+类是[引用类型](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145)。使用类需要考虑特定标识或存在特定生命周期的事物。例如你可以将一个人依靠类去建模，因为两个人的对象是两个不同的东西。虽然两个人都有姓名和生日，但这并不意味着他们是同一个人。一个人的生日可以是结构体，因为一个1950年3月3日的日期和另外一个1950年3月3日的日期是一样的。日期本身不需要特定的标识。  
+
+有时，事物应该定义为结构体却遵循`AnyObject`的协议，或者历史原因曾经被定义为类(`NSDate`, `NSSet`)。所以，只好尽可能遵循这些准则吧。  
+
+
+### 定义的例子  
+
+下面是一个样式良好的类定义的编码例子： 
+
+```swift
+class Circle: Shape {
+  var x: Int, y: Int
+  var radius: Double
+  var diameter: Double {
+    get {
+      return radius * 2
+    }
+    set {
+      radius = newValue / 2
+    }
+  }
+
+  init(x: Int, y: Int, radius: Double) {
+    self.x = x
+    self.y = y
+    self.radius = radius
+  }
+
+  convenience init(x: Int, y: Int, diameter: Double) {
+    self.init(x: x, y: y, radius: diameter / 2)
+  }
+
+  override func area() -> Double {
+    return Double.pi * radius * radius
+  }
+}
+
+extension Circle: CustomStringConvertible {
+  var description: String {
+    return "center = \(centerString) area = \(area())"
+  }
+  private var centerString: String {
+    return "(\(x),\(y))"
+  }
+}
+```
+
+上面的例子展示了以下几点规则: 
+
+* 为属性，变量，常量，参数声明以及其他语句的指定类型，在冒号前不带空格，后带一个空格。例如：`x: Int`, `Circle: Shape`。 
+* 如果变量或结构体是共享类型或上下文，定义在同一行中。  
+* 缩进getter和setter的定义和属性观察器。
+* 不要显式声明默认的修饰符，例如变量的`internal`。  
+* 在扩展中加入额外的功能。（例如 printing） 
+* 对外隐藏不共享的实现细节。例如：扩展中用`private`限制`centerString`的访问权限。  
+
+### Self的使用 
+出于简洁，避免使用`self`因为Swift并不要求通过它才能访问对象的属性与它的方法。 
+只有在编译器要求时才使用self（在`@escaping`闭包或者在参数中消除属性歧义的构造器中）。除此外，能不带self编译通过的麻烦去掉。 
+
+### 计算属性 
+
+出于简洁，如果计算属性只读，请把get语句去掉。 get语句仅在set语句声明后才强制要求。 
+
+**建议**:  
+```swift
+var diameter: Double {
+  return radius * 2
+}
+```
+
+**避免**:  
+```swift
+var diameter: Double {
+  get {
+    return radius * 2
+  }
+}
+```
+
+### 阻止重写  
+
+使用`final`标记类或成员会显得累赘，而且这并不是必须的。尽管如此，有时候使用`final`可以令你的意图更加明显，显然这是值得的。下面的例子中，`Box`有特定用途，并且不打算让其派生子类定制。标记`final`使其更加清楚了。  
+
+```swift
+// Turn any generic type into a reference type using this Box class.
+final class Box<T> {
+  let value: T
+  init(_ value: T) {
+    self.value = value
+  }
+}
+```
+
 
 
 
