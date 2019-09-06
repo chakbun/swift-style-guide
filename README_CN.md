@@ -40,6 +40,10 @@
  1. 编写一个不含参数的方法。例如：下一步，你需要调用`addTarget`。 
  2. 编写一个带参数标签的方法。例如：下一步，你需要调用`addTarget(_:action:)`。 
  3. 编写一个带参数标签和类型的完整方法。例如：下一步，你需要调用`addTarget(_: Any?, action:Selector?)`。  
-对于`UIGestureRecognizer`使用上面的例子，1是最明确和优先选择的的。  
+
+对于`UIGestureRecognizer`使用上面的例子，1是最明确和应优先选择的。  
+
 **扩展**：你可以使用Xcode的jump bar追踪带参数标签的方法。如果你特别擅长同时按多个键，将鼠标移到方法名中并按下Shift-Control-Option-Command-C(所有4个修饰键)，这样Xcode将友好地将其拷贝到你的剪贴板中。 
+
+![Methods in Xcode jump bar](screens/xcode-jump-bar.png)
 
