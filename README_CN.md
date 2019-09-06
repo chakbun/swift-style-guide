@@ -25,9 +25,10 @@
  	* 功能可用类协议应该以 -able 或 -ible 结尾； 
  * 不要使用让专家警惊诧或入门者困惑的术语；
  * 一般避免使用缩写；
- * 使用命名先例；
+ * 参照既有先例命名；
  * 尽量使用方法和属性替代函数；
- * 均匀地在上下文使用统一缩写前缀；
+ * 套管首字母缩略词和首字母统一向上或向下；
+ > casing acronyms and initialisms uniformly up or down 
  * 为具有相同意义的方法提供相同的基础命名； 
  * 避免通过返回类型重载； 
  * 选择可提供给文档使用的参数名称； 
@@ -46,4 +47,89 @@
 **扩展**：你可以使用Xcode的jump bar追踪带参数标签的方法。如果你特别擅长同时按多个键，将鼠标移到方法名中并按下Shift-Control-Option-Command-C(所有4个修饰键)，这样Xcode将友好地将其拷贝到你的剪贴板中。 
 
 ![Methods in Xcode jump bar](screens/xcode-jump-bar.png)
+
+### 类前缀 
+Swift会在类型所属模块自动创建命名空间，所以你不需要加入像RW之类的类前缀。如果存在两个冲突的名字，你可以通过在名字前加入模块名去消除歧义。当然，这是不得不做的下策，尽可能不要这样做。  
+
+```swift
+import SomeModule
+
+let myClass = MyModule.UsefulClass()
+```
+
+### 代理 
+当自定义代理方法，代理源应该是第一个带省略实标签的参数。（UIKit中包含千千万万个这样的例子）  
+
+**建议**:  
+```swift
+func namePickerView(_ namePickerView: NamePickerView, didSelectName name: String)
+func namePickerViewShouldReload(_ namePickerView: NamePickerView) -> Bool
+``` 
+
+**避免**:  
+```swift
+func didSelectName(namePicker: NamePickerViewController, name: String)
+func namePickerShouldReload() -> Bool
+```
+
+### 使用类型推断  
+使用编译器可推断的上下文编写更简短，更清晰的代码。（参考[类型推断](#type-inference)） 
+
+**建议**:  
+```swift
+let selector = #selector(viewDidLoad)
+view.backgroundColor = .red
+let toView = context.view(forKey: .to)
+let view = UIView(frame: .zero) 
+``` 
+
+**避免**:  
+```swift
+let selector = #selector(ViewController.viewDidLoad)
+view.backgroundColor = UIColor.red
+let toView = context.view(forKey: UITransitionContextViewKey.to)
+let view = UIView(frame: CGRect.zero)
+``` 
+
+### 泛型 
+泛型参数的命名必须是可描述性的上驼峰式风格。如果一个参数不需要带特定的关系或角色，可使用传统的单个大写字母表示。如`T`, `U`, `V`等。 
+
+**建议**:  
+```swift
+struct Stack<Element> { ... }
+func write<Target: OutputStream>(to target: inout Target)
+func swap<T>(_ a: inout T, _ b: inout T)
+``` 
+
+**避免**:  
+```swift
+struct Stack<T> { ... }
+func write<target: OutputStream>(to target: inout target)
+func swap<Thing>(_ a: inout Thing, _ b: inout Thing)
+``` 
+
+### 语言 
+使用美式英文拼写配合苹果的API。 
+
+**建议**:  
+```swift
+let color = "red"
+``` 
+
+**避免**:  
+```swift
+let colour = "red"
+``` 
+
+
+
+
+
+
+
+
+
+
+
+
 
