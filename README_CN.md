@@ -214,6 +214,59 @@ import UIKit
 var deviceModels: [String]
 ``` 
 
+## 间隔  
+使用2个空格代替制表符进行缩进，节省空间之余又有助于防止换行。请保证你的Xcode和工程项目中使用下面的配置： 
+
+![Xcode indent settings](screens/indentation.png)
+
+* 方法与其他（`if`/`else`/`switch`/`while` etc.）的花括号的打开应该与语句在同一行，括号的关闭在独立新一行。  
+* 提示：你可以在选择一些代码后（或者 **command+A** 全选）按 **Control+I**(或菜单栏中**Editor ▸ Structure ▸ Re-Indent**) 重新缩进。Xcode的一些代码模版采用了4空格制表，通过这个方法可以很好解决这个问题。  
+
+**建议**:  
+```swift
+if user.isHappy {
+  // Do something
+} else {
+  // Do something else
+}
+``` 
+
+**避免**:  
+```swift
+if user.isHappy
+{
+  // Do something
+}
+else {
+  // Do something else
+}
+``` 
+
+* 为了在视觉上更清晰和有组织，方法与方法之间使用一行空白分开。空格的作用是将方法按照功能分节，但如果存在太多的分节，你就要考虑将方法拆分成若干子方法了。  
+* 方法体首尾不要有空行。  
+* 冒号的左边不要有空格，右边带一空格。除非是三元运算符` ? : `，空字典`[:]`和`#selector`语法`addTarget(_:action:)`。  
+
+**建议**:  
+```swift
+class TestDatabase: Database {
+  var data: [String: CGFloat] = ["A": 1.2, "B": 3.2]
+}
+``` 
+
+**避免**:  
+```swift
+if user.isHappy
+class TestDatabase : Database {
+  var data :[String:CGFloat] = ["A" : 1.2, "B":3.2]
+}
+``` 
+
+* 单行长句应该控制在70个字符左右，但没有硬性规定。  
+* 避免在行尾使用空格。 
+* 文件以换行符结束。 
+
+
+
 
 
 
