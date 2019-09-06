@@ -369,6 +369,141 @@ final class Box<T> {
 }
 ```
 
+## 函数声明 
+
+保持函数声明（含花括号）在一行内。 
+
+```swift
+func reticulateSplines(spline: [Double]) -> Bool {
+  // reticulate code goes here
+}
+```
+
+对于具有长标签的函数，每一个参数独立一行并保持同样的缩进。  
+
+```swift
+func reticulateSplines(
+  spline: [Double], 
+  adjustmentFactor: Double,
+  translateConstant: Int, comment: String
+) -> Bool {
+  // reticulate code goes here
+}
+```
+
+使用 `()`代替`(Void)`表示空输入；使用`Void`代替`()`表示空输出。  
+
+**建议**:  
+```swift
+func updateConstraints() -> Void {
+  // magic happens here
+}
+
+typealias CompletionHandler = (result) -> Void
+```
+
+**避免**:  
+```swift
+func updateConstraints() -> () {
+  // magic happens here
+}
+
+typealias CompletionHandler = (result) -> ()
+```
+
+## 函数调用  
+
+在调用的地方镜像函数声明的风格，适合单行的调用应该这样写： 
+
+```swift
+let success = reticulateSplines(splines)
+```
+
+如果调用时候必须分行，那么每个参数独立一行并且保持相同的缩进效果。 
+
+```swift
+let success = reticulateSplines(
+  spline: splines,
+  adjustmentFactor: 1.3,
+  translateConstant: 2,
+  comment: "normalize the display")
+```
+
+## 闭包表达式  
+
+仅当仅有一个闭包参数且是最后一个参数才使用尾随闭包。闭包参数需具有描述性的名字。  
+
+**建议**:  
+```swift
+UIView.animate(withDuration: 1.0) {
+  self.myView.alpha = 0
+}
+
+UIView.animate(withDuration: 1.0, animations: {
+  self.myView.alpha = 0
+}, completion: { finished in
+  self.myView.removeFromSuperview()
+})
+```
+
+**避免**:  
+```swift
+UIView.animate(withDuration: 1.0, animations: {
+  self.myView.alpha = 0
+})
+
+UIView.animate(withDuration: 1.0, animations: {
+  self.myView.alpha = 0
+}) { f in
+  self.myView.removeFromSuperview()
+}
+```
+
+对于上下文清晰的单表达式闭包，使用隐式返回。
+
+```swift
+attendeeList.sort { a, b in
+  a > b
+}
+```
+
+采用尾随闭包的链式方法应是在上下文中清晰易读的。至于间距，换行和命名的风格都留给编码者决定。例如：  
+
+```swift
+let value = numbers.map { $0 * 2 }.filter { $0 % 3 == 0 }.index(of: 90)
+
+let value = numbers
+  .map {$0 * 2}
+  .filter {$0 > 50}
+  .map {$0 + 10}
+```
+
+## 类型  
+
+尽可能使用Swift原生类型和表达式。Swift提供桥接Objective-C的方式，所以你仍可使用你所需的Objective-C类型集。  
+
+**建议**:
+```swift
+let width = 120.0                                    // Double
+let widthString = "\(width)"                         // String
+```
+
+**不建议**:
+```swift
+let width = 120.0                                    // Double
+let widthString = (width as NSNumber).stringValue    // String
+```
+
+**避免**:
+```swift
+let width: NSNumber = 120.0                          // NSNumber
+let widthString: NSString = width.stringValue        // NSString
+```
+
+在绘画编码中，可使用`CGFloat`避免过多频繁的类型转化，使代码更简洁。
+In drawing code, use `CGFloat` if it makes the code more succinct by avoiding too many conversions。 
+
+
 
 
 
