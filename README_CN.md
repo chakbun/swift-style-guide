@@ -1,7 +1,7 @@
 文章翻译自[Raywenderlich/swift-style-guide](https://github.com/raywenderlich/swift-style-guide)  
-目的只想练习一下英文阅读能力以及加深对Swift语言的理解，如果翻译错误欢迎指出，谢谢。🙏
-翻译使用的术语参考了 https://www.cnswift.org/  
+目的只想练习一下英文阅读能力以及加深对Swift语言的理解，翻译使用的术语参考了:(https://www.cnswift.org/)，如果翻译存在错误，欢迎指出。谢谢。🙏  
 
+ 
 ## 正确性 
 尽可能让你的代码在编译过程中没有警告。 下面的很多设计风格都遵循了这条规则，例如用 #selector 类型代替了字符串文字。
 
