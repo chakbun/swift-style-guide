@@ -1,6 +1,6 @@
 文章翻译自[Raywenderlich/swift-style-guide](https://github.com/raywenderlich/swift-style-guide)  
 目的只想练习一下英文阅读能力以及加深对Swift语言的理解，翻译使用的术语参考了https://www.cnswift.org/ 。  
-如果翻译存在错误，欢迎指出。谢谢。🙏  
+如果翻译存在错误，欢迎指出。谢谢。
  
 ## 正确性 
 尽可能让你的代码在编译过程中没有警告。 下面的很多设计风格都遵循了这条规则，例如用 #selector 类型代替了字符串文字。
@@ -900,7 +900,134 @@ let swift = "not a scripting language"
 let swift = "not a scripting language";
 ```
 
-**注意**: Swift与JavaScript是截然不同的两种语言, JavaScript去掉分号[被认为是不安全的](http://stackoverflow.com/questions/444080/do-you-recommend-using-semicolons-after-every-statement-in-javascript)  
+**注意**: Swift与JavaScript是截然不同的两种语言, JavaScript去掉分号[被认为是不安全的](http://stackoverflow.com/questions/444080/do-you-recommend-using-semicolons-after-every-statement-in-javascript)   
 
+## 圆括号
+
+条件语句的圆括号不是必须，一般应去掉！！！
+
+**建议**:
+```swift
+if name == "Hello" {
+  print("World")
+}
+```
+
+**避免**:
+```swift
+if (name == "Hello") {
+  print("World")
+}
+```
+
+但一些复杂的表达式中，圆括号有时可保留使代码更清晰可读。  
+
+**建议**:
+```swift
+let playerMark = (player == current ? "X" : "O")
+```
+
+## 多行字符串
+
+当使用到一个很长的字符串，通常都会使用分行的方式处理。分行的开端与等号在同一行，但内容另起一行并缩进一级。  
+
+**建议**:
+
+```swift
+let message = """
+  You cannot charge the flux \
+  capacitor with a 9V battery.
+  You must use a super-charger \
+  which costs 10 credits. You currently \
+  have \(credits) credits available.
+  """
+```
+
+**避免**:
+
+```swift
+let message = """You cannot charge the flux \
+  capacitor with a 9V battery.
+  You must use a super-charger \
+  which costs 10 credits. You currently \
+  have \(credits) credits available.
+  """
+```
+
+**避免**:
+
+```swift
+let message = "You cannot charge the flux " +
+  "capacitor with a 9V battery.\n" +
+  "You must use a super-charger " +
+  "which costs 10 credits. You currently " +
+  "have \(credits) credits available."
+```
+
+## 不要emoji  
+
+不要在你的项目中使用emoji。对于编码的读者来说，这是一个不必要的摩擦。虽然emoji很可爱，但它们对学习不会有任何帮助之余甚至阻碍编码的流畅度。  
+
+## 组织和包标识符  
+
+涉及Xcode项目的组织应为`Ray Wenderlich`，教程的项目名为`TutorialName`吗，所以包标识符应为`com.raywenderlich.TutorialName`。  
+
+![Xcode Project settings](screens/project_settings.png)
+
+## 版权信息  
+
+下面的版权信息应该包含在每一个源文件的头部。  
+
+```swift
+/// Copyright (c) 2019 Razeware LLC
+/// 
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
+/// 
+/// The above copyright notice and this permission notice shall be included in
+/// all copies or substantial portions of the Software.
+/// 
+/// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+/// distribute, sublicense, create a derivative work, and/or sell copies of the
+/// Software in any work that is designed, intended, or marketed for pedagogical or
+/// instructional purposes related to programming, coding, application development,
+/// or information technology.  Permission for such use, copying, modification,
+/// merger, publication, distribution, sublicensing, creation of derivative works,
+/// or sale is expressly withheld.
+/// 
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+/// THE SOFTWARE.
+```
+
+## 笑脸  
+
+笑脸是[raywenderlich.com](https://www.raywenderlich.com/)网站一个重要的风格。拥有一个正确的微笑是非常重要的，这标志着编码主题的巨大幸福感与兴奋感。
+It is very important to have the correct smile signifying the immense amount of happiness and excitement for the coding topic. The closing square bracket `]` is used because it represents the largest smile able to be captured using ASCII art. A closing parenthesis `)` creates a half-hearted smile, and thus is not preferred.
+
+**建议**:
+```
+:]
+```
+
+**避免**:
+```
+:)
+```
+
+## 参考
+
+* [The Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
+* [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
+* [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
+* [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
 
 
