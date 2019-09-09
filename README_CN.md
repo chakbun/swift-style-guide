@@ -1,6 +1,6 @@
 文章翻译自[Raywenderlich/swift-style-guide](https://github.com/raywenderlich/swift-style-guide)  
-目的只想练习一下英文阅读能力以及加深对Swift语言的理解，翻译使用的术语参考了:(https://www.cnswift.org/)，如果翻译存在错误，欢迎指出。谢谢。🙏  
-
+目的只想练习一下英文阅读能力以及加深对Swift语言的理解，翻译使用的术语参考了https://www.cnswift.org/ 。  
+如果翻译存在错误，欢迎指出。谢谢。🙏  
  
 ## 正确性 
 尽可能让你的代码在编译过程中没有警告。 下面的很多设计风格都遵循了这条规则，例如用 #selector 类型代替了字符串文字。
@@ -689,5 +689,70 @@ launch(&rocket)
 let tuples = zip(a, b)  // feels natural as a free function (symmetry)
 let value = max(x, y, z)  // another free function that feels natural
 ```
+
+## 内存管理  
+
+所有编码（包括测试代码，指导用的样本代码等）都必须避免产生循环引用。使用`weak`或`unowned`防止强循环。或者使用值类型 (`struct`, `enum`) 防止循环。  
+
+### 延伸对象生命周期  
+
+使用语句`[weak self]` 或 `guard let self = self else { return }` 延伸对象的生命周期。`[weak self]`比`[unowned self]`更安全，因为`self`生命周期更长。使用显式生命周期延伸，而不是可选类型链式结构。  
+
+**建议**
+```swift
+resource.request().onComplete { [weak self] response in
+  guard let self = self else {
+    return
+  }
+  let model = self.updateModel(response)
+  self.updateUI(model)
+}
+```
+
+**避免**
+```swift
+// might crash if self is released before response returns
+resource.request().onComplete { [unowned self] response in
+  let model = self.updateModel(response)
+  self.updateUI(model)
+}
+```
+
+**避免**
+```swift
+// deallocate could happen between updating the model and updating UI
+resource.request().onComplete { [weak self] response in
+  let model = self?.updateModel(response)
+  self?.updateUI(model)
+}
+```
+
+## 访问控制  
+
+官方教程中关于访问控制的写得很繁琐。说白了就是：合理地使用`private` 与 `fileprivate`，可增加代码清晰度，促进封装。除非编译器要求用`fileprivate`， 否则优先使用`private`。  
+
+当你只有在需要完整的访问控制规范时，才显式使用`open`, `public`, 和 `internal`。  
+
+除非是静态标识`static`与`@IBAction`, `@IBOutlet` 或 `@discardableResult`等属性标签，否则访问控制的关键字必须排在首位。  
+
+**建议**:
+```swift
+private let message = "Great Scott!"
+
+class TimeMachine {  
+  private dynamic lazy var fluxCapacitor = FluxCapacitor()
+}
+```
+
+**避免**:
+```swift
+fileprivate let message = "Great Scott!"
+
+class TimeMachine {  
+  lazy dynamic private var fluxCapacitor = FluxCapacitor()
+}
+```
+
+
 
 
