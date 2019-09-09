@@ -1010,8 +1010,7 @@ let message = "You cannot charge the flux " +
 
 ## 笑脸  
 
-笑脸是[raywenderlich.com](https://www.raywenderlich.com/)网站一个重要的风格。拥有一个正确的微笑是非常重要的，这标志着编码主题的巨大幸福感与兴奋感。
-It is very important to have the correct smile signifying the immense amount of happiness and excitement for the coding topic. The closing square bracket `]` is used because it represents the largest smile able to be captured using ASCII art. A closing parenthesis `)` creates a half-hearted smile, and thus is not preferred.
+笑脸是[raywenderlich.com](https://www.raywenderlich.com/)网站一个重要的风格。拥有一个正确的微笑是非常重要的，这标志着编码主题的巨大幸福感与兴奋感。使用闭方括号是因为ASCII颜文字所能表达出最大的微笑。闭圆括号像表达出一个半心意的微笑，所以不建议。
 
 **建议**:
 ```
