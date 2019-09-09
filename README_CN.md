@@ -667,4 +667,27 @@ var employees: Dictionary<Int, String>
 var faxNumber: Optional<Int>
 ```
 
+## 函数与方法    
+
+不依附在任何类或类型的自由函数（free functions）需要谨慎使用。尽可能使用方法代替函数，因为方法更利于代码的可读性和可发现性。  
+函数更适用于没有关联任何特定类型或实例的场景。  
+
+**建议**
+```swift
+let sorted = items.mergeSorted()  // easily discoverable
+rocket.launch()  // acts on the model
+```
+
+**避免**
+```swift
+let sorted = mergeSort(items)  // hard to discover
+launch(&rocket)
+```
+
+**函数场景**
+```swift
+let tuples = zip(a, b)  // feels natural as a free function (symmetry)
+let value = max(x, y, z)  // another free function that feels natural
+```
+
 
