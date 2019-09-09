@@ -753,6 +753,154 @@ class TimeMachine {
 }
 ```
 
+## 控制流
+
+建议`for-in`风格，避免`while-condition-increment`风格。  
+
+**建议**:
+```swift
+for _ in 0..<3 {
+  print("Hello three times")
+}
+
+for (index, person) in attendeeList.enumerated() {
+  print("\(person) is at position #\(index)")
+}
+
+for index in stride(from: 0, to: items.count, by: 2) {
+  print(index)
+}
+
+for index in (0...3).reversed() {
+  print(index)
+}
+```
+
+**避免**:
+```swift
+var i = 0
+while i < 3 {
+  print("Hello three times")
+  i += 1
+}
+
+var i = 0
+while i < attendeeList.count {
+  let person = attendeeList[i]
+  print("\(person) is at position #\(i)")
+  i += 1
+}
+```
+
+### 三元运算符  
+
+三元运算符`?:`在可增加清晰度和代码整齐度的时候，单个条件判断使用。如果存在多个条件判断，通常使用`if`或重构为实例变量。三元运算符的最佳使用场景是在 决定采用哪一个值去赋值给变量的时候。 
+
+**建议**:
+
+```swift
+let value = 5
+result = value != 0 ? x : y
+
+let isHorizontal = true
+result = isHorizontal ? x : y
+```
+
+**避免**:
+
+```swift
+result = a > b ? x = c > d ? c : d : y
+```
+
+## Golden Path
+
+当使用条件语句时，代码的左边距是“黄金”或“快乐”路径（ "golden" or "happy" path）。 这表示，不嵌套`if`语句前提下，多个return语句都可以接受。`guard`语句就是因为这样存在的。  
+
+**建议**:
+```swift
+func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
+
+  guard let context = context else {
+    throw FFTError.noContext
+  }
+  guard let inputData = inputData else {
+    throw FFTError.noInputData
+  }
+
+  // use context and input to compute the frequencies
+  return frequencies
+}
+```
+
+**避免**:
+```swift
+func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
+
+  if let context = context {
+    if let inputData = inputData {
+      // use context and input to compute the frequencies
+
+      return frequencies
+    } else {
+      throw FFTError.noInputData
+    }
+  } else {
+    throw FFTError.noContext
+  }
+}
+```
+
+当多个可选类型使用`guard`或`if let`展开时，尽可能使用复合形式减少嵌套。使用复合形式，`guard`独立一行，然后每个条件保持相同缩进。`else`与条件相同缩进，其执行语句再缩进一级如下面例子所示:  
+
+**建议**:
+```swift
+guard 
+  let number1 = number1,
+  let number2 = number2,
+  let number3 = number3 
+  else {
+    fatalError("impossible")
+}
+// do something with numbers
+```
+
+**避免**:
+```swift
+if let number1 = number1 {
+  if let number2 = number2 {
+    if let number3 = number3 {
+      // do something with numbers
+    } else {
+      fatalError("impossible")
+    }
+  } else {
+    fatalError("impossible")
+  }
+} else {
+  fatalError("impossible")
+}
+```
+
+### 保护机制
+
+想提前结束Guard语句有几种方式。一般简单的语句像`return`，`throw`，`break`，`continue` 和 `fatalError()`，避免大量代码块。如果多个退出点需要做代码的清理保存工作，使用`defer`代码块去避免重复的代码。  
+
+## 分号
+
+Swift 并不需要在语句结束的位置加入分号`;`。除非是你将多个语句放在一行。 
+不要将多个语句放在一行用分号隔开的风格！！！ 
+
+**建议**:
+```swift
+let swift = "not a scripting language"
+```
+
+**避免**:
+```swift
+let swift = "not a scripting language";
+```
+
+**注意**: Swift与JavaScript是截然不同的两种语言, JavaScript去掉分号[被认为是不安全的](http://stackoverflow.com/questions/444080/do-you-recommend-using-semicolons-after-every-statement-in-javascript)  
 
 
 
