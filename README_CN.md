@@ -1,5 +1,6 @@
 文章翻译自[Raywenderlich/swift-style-guide](https://github.com/raywenderlich/swift-style-guide)  
-目的只想练习一下英文阅读能力以及加深对Swift语言的理解，如果翻译错误欢迎指出，谢谢。🙏  
+目的只想练习一下英文阅读能力以及加深对Swift语言的理解，如果翻译错误欢迎指出，谢谢。🙏
+翻译使用的术语参考了 https://www.cnswift.org/  
 
 ## 正确性 
 尽可能让你的代码在编译过程中没有警告。 下面的很多设计风格都遵循了这条规则，例如用 #selector 类型代替了字符串文字。
@@ -500,13 +501,170 @@ let width: NSNumber = 120.0                          // NSNumber
 let widthString: NSString = width.stringValue        // NSString
 ```
 
-在绘画编码中，可使用`CGFloat`避免过多频繁的类型转化，使代码更简洁。
-In drawing code, use `CGFloat` if it makes the code more succinct by avoiding too many conversions。 
+在绘画编码中，可使用`CGFloat`避免过多频繁的类型转化，使代码更简洁。  
+
+### 常量  
+
+使用关键字`let`声明常量，而`var`声明变量。如果一个变量的值不会发生改变，应使用`let`代替`var`。  
+
+**提示:** 技术好的编码者声明变量都使用`let`，除非编译器报错了才改用`var`。  
+
+你可以声明类型属性代替声明常量实例。使用`static let`可简单声明类型属性。 因为这种方式更容易区别实例属性，所以相对于全局常量一般建议使用声明类型属性的方式。例如：  
+
+**建议**:
+```swift
+enum Math {
+  static let e = 2.718281828459045235360287
+  static let root2 = 1.41421356237309504880168872
+}
+
+let hypotenuse = side * Math.root2
+
+```
+**注意:** 使用不区分大小写的枚举的好处是可以保证其不会意外被实例化并且被误作为命名空间工作；
+
+**避免**:
+```swift
+let e = 2.718281828459045235360287  // 污染全局命名空间
+let root2 = 1.41421356237309504880168872
+
+let hypotenuse = side * root2 // root2是什么?
+```
+
+### 静态方法与变量类型属性  
+
+静态方法与类型属性与全局函数和全局变量相似，应该谨慎使用。当功能范围限定为特定类型或需要与Objective-C互通时，静态方法与类型属性很有用。
+
+### 可选类型 
+
+使用`?`声明变量或函数返回值可选的,表示该值允许为`nil`。  
+当你确定在使用前已初始化的实例变量，可通过`!`隐式展开可选类型，例如子视图将会在`viewDidLoad()`被初始化。建议在大多数其他场景优先使用可选类型和隐式展开的方式。 
+访问可选类型的值时，当仅访问一次或链式访问多个可选类型时，可使用下面的`?`链式语法。  
+
+```swift
+textContainer?.textLabel?.setNeedsDisplay()
+```
+
+可选类型一次展开后执行多个操作的使用:  
+
+```swift
+if let textContainer = textContainer {
+  // do many things with textContainer
+}
+```
+
+避免使用像`optionalString`或`maybeView`的方式命名可选类型，因为在声明中已经很明确表示变量是可选类型。  
+对于可选绑定，尽可能使用原名称，避免使用`unwrappedView`或`actualLabel`等名称。  
+
+**建议**:
+```swift
+var subview: UIView?
+var volume: Double?
+
+// later on...
+if let subview = subview, let volume = volume {
+  // do something with unwrapped subview and volume
+}
+
+// another example
+UIView.animate(withDuration: 2.0) { [weak self] in
+  guard let self = self else { return }
+  self.alpha = 1.0
+}
+```
+
+**避免**:
+```swift
+var optionalSubview: UIView?
+var volume: Double?
+
+if let unwrappedSubview = optionalSubview {
+  if let realVolume = volume {
+    // do something with unwrappedSubview and realVolume
+  }
+}
+
+// another example
+UIView.animate(withDuration: 2.0) { [weak self] in
+  guard let strongSelf = self else { return }
+  strongSelf.alpha = 1.0
+}
+```
+
+### 延迟初始化
+
+在对象的生命周期更好地控制访问权限，可考虑延迟初始化。 特别是对于常常需要延迟加载试图的`UIViewController`作用更明显。你可以使用即时调用的闭包`{ }()`或调用一个私有工厂方法。例如：
+
+```swift
+lazy var locationManager = makeLocationManager()
+
+private func makeLocationManager() -> CLLocationManager {
+  let manager = CLLocationManager()
+  manager.desiredAccuracy = kCLLocationAccuracyBest
+  manager.delegate = self
+  manager.requestAlwaysAuthorization()
+  return manager
+}
+```
+
+**注意:**
+  - `[unowned self]` 这里不不需要，因为没有发生循环引用。  
+  - Location manager会弹出请求用户允许，因此控制访问权限在这里有意义。  
+
+### 类型推断  
+
+多使用紧凑精简的编码，让编译器去推断各个实例常量、变量的实际类型。类型推断同样适用于小型非空数组与字典。必要时，可指明类似`CGFloat`, `Int16`等具体类型。  
+
+**建议**:
+```swift
+let message = "Click the button"
+let currentBounds = computeViewBounds()
+var names = ["Mic", "Sam", "Christine"]
+let maximumWidth: CGFloat = 106.5
+```
+
+**避免**:
+```swift
+let message: String = "Click the button"
+let currentBounds: CGRect = computeViewBounds()
+var names = [String]()
+```
+
+#### 空数组与字典的类型注解  
+
+对于空的数组和字典，使用类型注解。(对已分配了大量，多行文字的数组和字典，使用类型注解)  
+
+**建议**:
+```swift
+var names: [String] = []
+var lookup: [String: Int] = [:]
+```
+
+**避免**:
+```swift
+var names = [String]()
+var lookup = [String: Int]()
+```
+
+**注意**: 遵循这条规则意味着选择一个描述性的名字更加的重要了。    
+
+### 语法糖
+
+使用简短的声明类型语法糖。  
 
 
+**建议**:
+```swift
+var deviceModels: [String]
+var employees: [Int: String]
+var faxNumber: Int?
+```
 
-
-
-
+**避免**:
+```swift
+var deviceModels: Array<String>
+var employees: Dictionary<Int, String>
+var faxNumber: Optional<Int>
+```
 
 
