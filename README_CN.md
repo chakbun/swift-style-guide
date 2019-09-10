@@ -56,26 +56,26 @@
 ## 命名 
 描述性和一致性的命名使软件更容易理解。参考[Swift命名风格](https://swift.org/documentation/api-design-guidelines/)  
 关键点包括： 
- * 尽可能使用清晰；
+ * 尽可能让调用清晰明确；
  * 清晰比简洁更重要；
  * 使用驼峰式风格`camelCase`；(不要使用`snake_case`)
  * 类型和协议使用大写字母，其他都用小写；
- * 保留所有必须的同时去掉所有多余的字；
- * 为含糊的部分补充上关键的词；
- * 尽可能保证使用流畅；
- * 使用`make`作为工厂方法的开端；
- * 方法命名能表达出细节
- 	* 动作方法的动词遵循 -ed, -ing 格式； 
- 	> verb methods follow the -ed, -ing rule for the non-mutating version 
- 	* 名词方法遵循 formX 格式； 
- 	> noun methods follow the formX rule for the mutating version 
- 	* 布尔类应该读起来像断言； 
- 	* 描述内容类协议读起来像名词； 
- 	* 功能可用类协议应该以 -able 或 -ible 结尾； 
- * 不要使用让专家警惊诧或入门者困惑的术语；
- * 一般避免使用缩写；
- * 参照既有先例命名；
- * 尽量使用方法和属性替代函数；
+ * 保留所有必须的词，去掉所有多余的词；
+ * 基于角色命名而不是类型；
+ * 保留所有必须的词，去掉所有多余的词；
+ * 在令人迷惑的部分补充必要说明；
+ * 尽可能保证使用流畅顺滑；
+ * 工厂方法使用`make`开始；
+ * 方法命名要表达出细节
+ 	* 动作方法的动词遵循 -ed, -ing 格式区分可变类型；
+ 	* 可变类型的名词方法遵循 formX 格式； 
+ 	* 使布尔类读起来像断言； 
+ 	* 使描述内容类协议像名词，例如: `Collection`  
+ 	* 功能可用类协议应该以 -able 或 -ible 结尾；例如: `Equatable`, `ProgressReporting`  
+ * 不要使用让专家惊诧或入门者困惑的术语；
+ * 尽可能避免使用缩写；
+ * 命名参照已有的先例；
+ * 尽可能使用方法和属性替代函数；
  * 套管首字母缩略词和首字母统一向上或向下；
  > casing acronyms and initialisms uniformly up or down 
  * 为具有相同意义的方法提供相同的基础命名； 
