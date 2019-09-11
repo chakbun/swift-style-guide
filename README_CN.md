@@ -383,8 +383,7 @@ extension Circle: CustomStringConvertible {
 除非编译器因为缺失self提示错误（在`@escaping`闭包或者在参数中消除属性歧义的构造器中），否则一律不使用。  
 
 ### 计算属性 
-
-出于简洁，如果计算属性只读，请把get语句去掉。 get语句仅在set语句声明后才强制要求。 
+如果计算属性只允许读，请把get语句去掉。get语句只有在set语句声明后才强制区分的。 
 
 **建议**:  
 ```swift
