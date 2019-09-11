@@ -323,10 +323,9 @@ class TestDatabase : Database {
 ### 区别    
 切记，结构体是[值类型](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_144)。结构体适用于处理不需要特定标识的事物。例如一个数组a[a, b, c]与另外一个数组b[a, b, c]是相同的，完全可互换的。对于使用第一个数组还是第二个数组没有任何影响，因为他们代表着相同的东西。这是考虑使用结构体的根本。  
 
-类是[引用类型](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145)。使用类需要考虑特定标识或存在特定生命周期的事物。例如你可以将一个人依靠类去建模，因为两个人的对象是两个不同的东西。虽然两个人都有姓名和生日，但这并不意味着他们是同一个人。一个人的生日可以是结构体，因为一个1950年3月3日的日期和另外一个1950年3月3日的日期是一样的。日期本身不需要特定的标识。  
+类是[引用类型](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145)。类适用于需要考虑特定标识或存在特定生命周期的事物。例如可以将一个人依靠类去建模，因为两个人的对象是两个不同的东西。两个人都有姓名和生日，但这并不意味着他们是同一个人。一个人的生日可以是结构体，因为一个1950年3月3日的日期和另外一个1950年3月3日的日期是一样的。日期本身不需要特定的标识。  
 
 有时，事物应该定义为结构体却遵循`AnyObject`的协议，或者历史原因曾经被定义为类(`NSDate`, `NSSet`)。所以，只好尽可能遵循这些准则吧。  
-
 
 ### 定义的例子  
 
