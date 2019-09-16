@@ -323,9 +323,9 @@ class TestDatabase : Database {
 ### 区别    
 切记，结构体是[值类型](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_144)。结构体适用于处理不需要特定标识的事物。例如一个数组a[a, b, c]与另外一个数组b[a, b, c]是相同的，完全可互换的。对于使用第一个数组还是第二个数组没有任何影响，因为他们代表着相同的东西。这是考虑使用结构体的根本。  
 
-类是[引用类型](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145)。类适用于需要考虑特定标识或存在特定生命周期的事物。例如可以将一个人依靠类去建模，因为两个人的对象是两个不同的东西。两个人都有姓名和生日，但这并不意味着他们是同一个人。一个人的生日可以是结构体，因为一个1950年3月3日的日期和另外一个1950年3月3日的日期是一样的。日期本身不需要特定的标识。  
+类是[引用类型](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145)。类适用于需要考虑特定标识或存在特定生命周期的事物。例如可以使用类将人这个物种去建模，因为两个人的对象是两个不同的东西。虽然每个人都有姓名和生日，但这并不表示他们是同一个人。人的生日可以是结构体，因为一个1950年3月3日的日期和另外一个1950年3月3日的日期是一样的。日期本身不需要特定的标识。  
 
-有时，事物应该定义为结构体却遵循`AnyObject`的协议，或者历史原因曾经被定义为类(`NSDate`, `NSSet`)。所以，只好尽可能遵循这些准则吧。  
+有时，事物本应该定义为结构体，却遵循`AnyObject`的协议。因为历史原因，像`NSDate`, `NSSet`等曾经被定义为类。所以，只好遵循这些准则吧。  
 
 ### 定义的例子  
 
@@ -379,7 +379,7 @@ extension Circle: CustomStringConvertible {
 * 对外隐藏不开放的实现细节。例如：扩展中用`private`限制`centerString`的访问权限。  
 
 ### Self的使用 
-尽可能使代码简洁，避免使用`self`。因为Swift并不要求通过self才能访问对象的属性和方法。 
+尽可能使代码简洁，避免使用`self`。因为Swift并不需要通过self才能访问对象的属性和方法。 
 除非编译器因为缺失self提示错误（在`@escaping`闭包或者在参数中消除属性歧义的构造器中），否则一律不使用。  
 
 ### 计算属性 
@@ -403,7 +403,7 @@ var diameter: Double {
 
 ### 阻止重写  
 
-使用`final`标记类或成员会显得累赘，而且这并不是必须的。尽管如此，有时候使用`final`可以令你的意图更加明显，显然这是值得的。下面的例子中，`Box`有特定用途，并且不打算让其派生子类定制。标记`final`使其更加清楚了。  
+使用`final`标记类或成员会显得累赘，而且这并不是必须的。尽管如此，但使用`final`可以更清楚表达你的意图，显然这是值得的。下面的例子中，`Box`有特定用途，并且不打算派生子类定制。标记`final`就更加清楚明了。  
 
 ```swift
 // Turn any generic type into a reference type using this Box class.
