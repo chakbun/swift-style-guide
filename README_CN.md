@@ -417,7 +417,7 @@ final class Box<T> {
 
 ## 函数声明 
 
-保持函数声明（含花括号）在一行内。 
+保持函数声明（含花括号）在同一行内。 
 
 ```swift
 func reticulateSplines(spline: [Double]) -> Bool {
@@ -425,7 +425,7 @@ func reticulateSplines(spline: [Double]) -> Bool {
 }
 ```
 
-对于具有长标签的函数，每一个参数独立一行并保持同样的缩进。  
+如果具有长标签的函数，可每一个参数独立一行并保持同样的缩进。  
 
 ```swift
 func reticulateSplines(
@@ -465,7 +465,7 @@ typealias CompletionHandler = (result) -> ()
 let success = reticulateSplines(splines)
 ```
 
-如果调用时候必须分行，那么每个参数独立一行并且保持相同的缩进效果。 
+如果调用时候必须分行，可每个参数独立一行并且保持相同的缩进效果。 
 
 ```swift
 let success = reticulateSplines(
@@ -477,7 +477,7 @@ let success = reticulateSplines(
 
 ## 闭包表达式  
 
-仅当仅有一个闭包参数且是最后一个参数才使用尾随闭包。闭包参数需具有描述性的名字。  
+满足最后一个参数是闭包且只有一个闭包参数的时候，才使用尾随闭包的风格。闭包参数应具有描述性的名字。  
 
 **建议**:  
 ```swift
@@ -513,7 +513,7 @@ attendeeList.sort { a, b in
 }
 ```
 
-采用尾随闭包的链式方法应是在上下文中清晰易读的。至于间距，换行和命名的风格都留给编码者决定。例如：  
+采用尾随闭包的链式方法应保证是上下文中清晰易读的。间距，换行和命名的风格都留给编码者决定。例如：  
 
 ```swift
 let value = numbers.map { $0 * 2 }.filter { $0 % 3 == 0 }.index(of: 90)
@@ -550,7 +550,7 @@ let widthString: NSString = width.stringValue        // NSString
 
 ### 常量  
 
-使用关键字`let`声明常量，而`var`声明变量。如果一个变量的值不会发生改变，应使用`let`代替`var`。  
+使用`let`声明常量，`var`声明变量。如果一个变量的值不会发生改变，应使用`let`代替`var`。  
 
 **提示:** 技术好的编码者声明变量都使用`let`，除非编译器报错了才改用`var`。  
 
@@ -566,7 +566,7 @@ enum Math {
 let hypotenuse = side * Math.root2
 
 ```
-**注意:** 使用不区分大小写的枚举的好处是可以保证其不会意外被实例化并且被误作为命名空间工作；
+**注意:** 使用不区分大小写的枚举的好处是可以保证其不会意外被实例化并且被误作为命名空间；
 
 **避免**:
 ```swift
@@ -578,13 +578,13 @@ let hypotenuse = side * root2 // root2是什么?
 
 ### 静态方法与变量类型属性  
 
-静态方法与类型属性与全局函数和全局变量相似，应该谨慎使用。当功能范围限定为特定类型或需要与Objective-C互通时，静态方法与类型属性很有用。
+静态方法与类型属性和全局函数与全局变量相似，应该谨慎使用。当功能范围限定为特定类型或需要与Objective-C互通时，静态方法与类型属性很有用。
 
 ### 可选类型 
 
-使用`?`声明变量或函数返回值可选的,表示该值允许为`nil`。  
+使用`?`声明变量或函数返回值是可选的,表示该值允许为`nil`。  
 当你确定在使用前已初始化的实例变量，可通过`!`隐式展开可选类型，例如子视图将会在`viewDidLoad()`被初始化。建议在大多数其他场景优先使用可选类型和隐式展开的方式。 
-访问可选类型的值时，当仅访问一次或链式访问多个可选类型时，可使用下面的`?`链式语法。  
+访问可选类型的值时，如果只访问一次或链式访问多个可选类型时，可使用下面的`?`可选链结构。  
 
 ```swift
 textContainer?.textLabel?.setNeedsDisplay()
@@ -653,7 +653,7 @@ private func makeLocationManager() -> CLLocationManager {
 ```
 
 **注意:**
-  - `[unowned self]` 这里不不需要，因为没有发生循环引用。  
+  - `[unowned self]` 这里是不需要的，因为没有发生循环引用。  
   - Location manager会弹出请求用户允许，因此控制访问权限在这里有意义。  
 
 ### 类型推断  
